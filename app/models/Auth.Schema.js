@@ -31,11 +31,11 @@ AuthSchema.pre('save', function (next) {
 })
 
 AuthSchema.methods.hashPassword = function(password) {
-    return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
+    return crypto.pbkdf2Sync(password, this.salt, 10000, 64, 'sha1').toString('base64');
 }
 
 AuthSchema.methods.authenticate = function(password) {
     return this.password === this.hashPassword(password);
 }
 
-mongoose.model('Auth', AuthSchema, 'auth');
+mongoose.model('Auth', AuthSchema);

@@ -15,6 +15,7 @@ module.exports = function() {
     require('../app/models/Detection.Schema');
     require('../app/models/Device.Schema');
     require('../app/models/Temperature.Schema');
+    require('../app/models/Auth.Schema');
 
     return db;
 }

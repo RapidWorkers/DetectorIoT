@@ -3,9 +3,11 @@ var express = require('express'),
     methodOverride = require('method-override'),
     morgan = require('morgan'),
     compress = require('compression'),
+    config = require('./config'),
     session = require('express-session'),
-    passport = require('passport'),
-    config = require('./config');
+    flash = require('connect-flash'),
+    passport = require('passport');
+
 
 module.exports = function() {
     var app = express();
@@ -29,11 +31,12 @@ module.exports = function() {
         secret: config.webConfig.sessionSecret
     }));
 
-    app.use(passport.initialize());
-    app.use(passport.session());
-
     app.set('views', './app/views');
     app.set('view engine', 'ejs');
+
+    app.use(flash());
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/api.server.routes.js')(app);

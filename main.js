@@ -7,9 +7,10 @@
 
 /** ################### INIT ################### **/
 var fs = require('fs'),
+    config = require('./config/config'),
     mongoose = require('./config/mongoose'),
     express = require('./config/express_config'),
-    passport = require('/config/passport');
+    passport = require('./config/passport');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -24,6 +25,8 @@ console.log("=========================================");
 
 var db = mongoose();
 var app = express();
+var passport = passport();
+
 
 app.use(errorHandler); //DEBUG
 module.exports = app;

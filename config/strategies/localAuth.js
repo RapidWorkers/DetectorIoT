@@ -3,8 +3,11 @@ var passport = require('passport'),
     Auth = require('mongoose').model('Auth');
 
 module.exports = function(){
-    passport.use(new LocalStrategy(function(username, password, done){
-        User.findOne({
+    passport.use(new LocalStrategy({
+        usernameField: 'userid',
+        passwordField: 'password'
+    },function(username, password, done){
+        Auth.findOne({
             userid : username
         }, function(err,user){
             if(err) {

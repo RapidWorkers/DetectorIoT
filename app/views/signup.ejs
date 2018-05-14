@@ -20,21 +20,34 @@
   <div class="container">
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">관리자용 계정 등록</div>
+      <% for(var i in messages) { %>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= messages[i] %></li>
+      </ol>
+      <% } %>
       <div class="card-body">
-        <form>
+        <form action="signup" method="post">
           <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
             <label for="userid">사용할 아이디</label>
-            <input class="form-control" id="userid" type="text" placeholder="아이디">
+            <input class="form-control" name="userid" type="text" placeholder="아이디">
+                  </div>
+              </div>
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="password">비밀번호</label>
-                <input class="form-control" id="password" type="password" placeholder="비밀번호">
+                <input class="form-control" name="password" type="password" placeholder="비밀번호">
               </div>
             </div>
           </div>
-          <a class="btn btn-primary btn-block" href="login.ejs">Register</a>
+            <div class="form-row">
+                <div class="col-md-6">
+          <input type="submit" class="btn btn-primary btn-block" value="관리자 계정 생성"/>
+                </div>
+            </div>
         </form>
       </div>
     </div>
