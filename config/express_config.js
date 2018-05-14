@@ -1,8 +1,10 @@
-var express = require('express')
+var express = require('express'),
     bodyParser  = require('body-parser'),
     methodOverride = require('method-override'),
     morgan = require('morgan'),
     compress = require('compression'),
+    session = require('express-session'),
+    passport = require('passport'),
     config = require('./config');
 
 module.exports = function() {
@@ -20,6 +22,15 @@ module.exports = function() {
     app.use(bodyParser.urlencoded({ extended: true }));//if application/x-url-encoded -> parse
     app.use(bodyParser.json());//if application/json -> parse
     app.use(methodOverride());
+
+    app.use(session({
+        saveUninitialized: true,
+        resave: true,
+        secret: config.webConfig.sessionSecret
+    }));
+
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     app.set('views', './app/views');
     app.set('view engine', 'ejs');

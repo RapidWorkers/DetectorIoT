@@ -7,8 +7,9 @@
 
 /** ################### INIT ################### **/
 var fs = require('fs'),
-    mongoose = require('./config/mongoose')
+    mongoose = require('./config/mongoose'),
     express = require('./config/express_config'),
+    passport = require('/config/passport');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
