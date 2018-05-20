@@ -18,4 +18,9 @@ module.exports = function(app) {
         .get(auth.renderSignin);
 
     app.get('/signout', auth.signout);
+
+    app.get('/dashboard', index.weather);
+    app.get('/weather', index.weather);
+    app.get('/gasandfire', index.weather);
+    app.get('/earthquake', index.weather);
 }

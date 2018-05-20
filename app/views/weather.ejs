@@ -1,0 +1,133 @@
+<% include header.ejs %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawWeatherChart);
+    google.charts.setOnLoadCallback(drawDiscomfortChart);
+
+    var jsonWeatherData = <%= jsonWeatherData%>;
+
+    function drawWeatherChart() {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('timeofday', '시간');
+        data.addColumn('number', '온도');
+        data.addColumn('number', '상대습도');
+
+        for (i in jsonWeatherData){
+            var date = new Date(parseInt(jsonWeatherData[i][0]))
+            data.addRow([[date.getHours(),date.getMinutes(),date.getSeconds()],jsonWeatherData[i][1],jsonWeatherData[i][2]]);
+        }
+
+        var options = {
+            series: {
+                0: {axis: "Temps"},
+                1: {axis: "Humid"}
+            },
+            axes: {
+                y: {
+                    Temps: {label: "온도 (*C)"},
+                    Humid: {label: "상대습도 (%)"}
+                }
+            }
+            //backgroundColor: '#f1f8e9'
+        };
+
+        var materialChart = new google.charts.Line(document.getElementById('weather_chart'));
+        materialChart.draw(data, options);
+    }
+
+    function drawDiscomfortChart() {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('timeofday', 'X');
+        data.addColumn('number', 'testDEV001');
+
+        for (i in jsonWeatherData){
+            var date = new Date(parseInt(jsonWeatherData[i][0]))
+            data.addRow([[date.getHours(),date.getMinutes(),date.getSeconds()],jsonWeatherData[i][2]]);
+        }
+
+        var options = {
+            hAxis: {
+                title: '시간'
+            },
+            vAxis: {
+                title: '상대습도(%)'
+            },
+            //backgroundColor: '#f1f8e9'
+        };
+
+        var chart = new google.charts.Line(document.getElementById('discomfort_chart'));
+        chart.draw(data, options);
+    }
+
+    $(window).resize(function(){
+        drawWeatherChart();
+        drawDiscomfortChart();
+    });
+
+</script>
+
+<h1><%= title %></h1>
+<p>&nbsp;</p>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-area-chart"></i> 온도/습도 차트</div>
+        <div class="card-body">
+            <div id="weather_chart"></div>
+        </div>
+        <div class="card-footer small text-muted">Powered by Google Chart</div>
+    </div>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> 불쾌지수 차트</div>
+    <div class="card-body">
+        <div id="discomfort_chart"></div>
+    </div>
+    <div class="card-footer small text-muted">Powered by Google Chart</div>
+</div>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i> Data Table Example</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>일시</th>
+                        <th>기기명</th>
+                        <th>온도</th>
+                        <th>상대습도</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>일시</th>
+                        <th>기기명</th>
+                        <th>온도</th>
+                        <th>상대습도</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>Edinburgh</td>
+                        <td>61</td>
+                    </tr>
+                    <tr>
+                        <td>Garrett Winters</td>
+                        <td>Accountant</td>
+                        <td>Tokyo</td>
+                        <td>63</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer small text-muted">&nbsp;</div>
+    </div>
+<% include footer.ejs %>
