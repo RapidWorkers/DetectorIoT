@@ -3,7 +3,8 @@ var auth = require('../controllers/auth.server.controller'),
     passport = require('passport');
 
 module.exports = function(app) {
-    app.get('/', index.main);
+    app.get('/', index.dashboard);
+    app.get('/dashboard', index.dashboard);
 
     app.route('/signup')
         .post(auth.signup)
@@ -19,8 +20,7 @@ module.exports = function(app) {
 
     app.get('/signout', auth.signout);
 
-    app.get('/dashboard', index.weather);
     app.get('/weather', index.weather);
-    app.get('/gasandfire', index.weather);
+    app.get('/gasandfire', index.gasandfire);
     app.get('/earthquake', index.weather);
 }

@@ -12,5 +12,14 @@ module.exports = {
         debug: true,
         port: 4000
     },
+    emailConfig: {
+        host: "smtp.mailgun.org",
+        port: 587,
+        secure: false,
+        userid: "",
+        password: "",
+
+
+    },
     deviceTimeout: "1800"
 }

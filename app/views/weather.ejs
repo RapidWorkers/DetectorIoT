@@ -1,6 +1,5 @@
 <% include header.ejs %>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
     google.charts.load('current', {packages: ['corechart', 'line']});
     google.charts.setOnLoadCallback(drawWeatherChart);
@@ -8,16 +7,31 @@
 
     var jsonWeatherData = <%= jsonWeatherData%>;
 
+    function calcDiscomfort(temp, humid){
+        return parseInt((temp-0.55*(1-0.01 * humid)*(temp-14.5)).toFixed(0));
+    };
+
+    $(document).ready(function() {
+        var t = $('#dataTable').DataTable();
+        for (i in jsonWeatherData) {
+            var date = new Date(parseInt(jsonWeatherData[i][0]))
+            //console.log("<tr><td>"+date.toLocaleTimeString()+"</td><td>testDev001</td><td>"+jsonWeatherData[i][1]+"</td><td>"+jsonWeatherData[i][2]+"</td></tr>");
+            t.row.add([date.toLocaleTimeString(), "testDev001", jsonWeatherData[i][1], jsonWeatherData[i][2]]).draw();
+            //$().appendTo("#dataTable tbody")
+        }
+    });
     function drawWeatherChart() {
         var data = new google.visualization.DataTable();
 
-        data.addColumn('timeofday', '시간');
+        data.addColumn('datetime', '시간');
         data.addColumn('number', '온도');
         data.addColumn('number', '상대습도');
 
         for (i in jsonWeatherData){
-            var date = new Date(parseInt(jsonWeatherData[i][0]))
-            data.addRow([[date.getHours(),date.getMinutes(),date.getSeconds()],jsonWeatherData[i][1],jsonWeatherData[i][2]]);
+            var date = new Date(parseInt(jsonWeatherData[i][0]));
+            //console.log(date.getHours());
+            data.addRow([date,jsonWeatherData[i][1],jsonWeatherData[i][2]]);
+            //data.addRow([[date.getHours(),date.getMinutes(),date.getSeconds()],jsonWeatherData[i][1],jsonWeatherData[i][2]]);
         }
 
         var options = {
@@ -41,12 +55,12 @@
     function drawDiscomfortChart() {
         var data = new google.visualization.DataTable();
 
-        data.addColumn('timeofday', 'X');
-        data.addColumn('number', 'testDEV001');
+        data.addColumn('datetime', '시간');
+        data.addColumn('number', '불쾌지수');
 
         for (i in jsonWeatherData){
             var date = new Date(parseInt(jsonWeatherData[i][0]))
-            data.addRow([[date.getHours(),date.getMinutes(),date.getSeconds()],jsonWeatherData[i][2]]);
+            data.addRow([date,calcDiscomfort(jsonWeatherData[i][1], jsonWeatherData[i][2])]);
         }
 
         var options = {
@@ -54,7 +68,7 @@
                 title: '시간'
             },
             vAxis: {
-                title: '상대습도(%)'
+                title: '불쾌지수'
             },
             //backgroundColor: '#f1f8e9'
         };
@@ -91,7 +105,7 @@
     <!-- Example DataTables Card-->
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fa fa-table"></i> Data Table Example</div>
+            <i class="fa fa-table"></i> 최근 기록된 온도 (최대 90개)</div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -112,18 +126,6 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>

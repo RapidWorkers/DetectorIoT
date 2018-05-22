@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>SB Admin - Start Bootstrap Template</title>
+  <title>DetectIoT</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -16,7 +16,14 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <script src="vendor/jquery/jquery.min.js"></script>
 </head>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var date = new Date(<%= lastMod%>);
+        $('#lastModTime').text("최종 업데이트: "+ date.toLocaleString());
+    })
+</script>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
@@ -118,7 +125,7 @@
         </li>
         <li class="nav-item">
               <span class="nav-link">
-                  최종 업데이트 : X분 전 (Version alpha)
+                <div id="lastModTime">최종 업데이트 : X분 전 (Version alpha)</div>
               </span>
         </li>
         <li class="nav-item">
@@ -135,6 +142,6 @@
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">My Dashboard</li>
+        <li class="breadcrumb-item active"><%= title%></li>
       </ol>
       <!-- Icon Cards-->

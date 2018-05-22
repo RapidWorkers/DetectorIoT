@@ -1,0 +1,93 @@
+<% include header.ejs %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawCO2Chart);
+
+    var jsonGFData = <%= jsonGFData%>;
+
+    $(document).ready(function() {
+        var t = $('#dataTable').DataTable();
+        for (i in jsonGFData) {
+            var date = new Date(parseInt(jsonGFData[i][0]))
+            if(jsonGFData[i][1] == 1) {
+                t.row.add([date.toLocaleTimeString(), "testDev001", "CO2", jsonGFData[i][2]]).draw();
+            }
+        }
+    });
+
+    function drawCO2Chart() {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('datetime', '시간');
+        data.addColumn('number', 'CO2 농도(ppm)');
+
+        for (i in jsonGFData){
+            if(jsonGFData[i][1] == 1) {
+                var date = new Date(parseInt(jsonGFData[i][0]))
+                data.addRow([date, jsonGFData[i][2]]);
+            }
+        }
+
+        var options = {
+            hAxis: {
+                title: '시간'
+            },
+            vAxis: {
+                title: 'CO2 농도(ppm)'
+            },
+            //backgroundColor: '#f1f8e9'
+        };
+
+        var chart = new google.charts.Line(document.getElementById('CO2_chart'));
+        chart.draw(data, options);
+    }
+
+    $(window).resize(function(){
+        drawCO2Chart();
+    });
+
+</script>
+
+<h1><%= title %></h1>
+<p>&nbsp;</p>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> CO2 농도 차트</div>
+    <div class="card-body">
+        <div id="CO2_chart"></div>
+    </div>
+    <div class="card-footer small text-muted">Powered by Google Chart</div>
+</div>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i> 최근 기록된 온도 (최대 200개)</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>일시</th>
+                        <th>기기명</th>
+                        <th>가스 종류</th>
+                        <th>ppm</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>일시</th>
+                        <th>기기명</th>
+                        <th>가스 종류</th>
+                        <th>ppm</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer small text-muted">&nbsp;</div>
+    </div>
+<% include footer.ejs %>

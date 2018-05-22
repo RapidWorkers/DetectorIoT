@@ -1,3 +1,115 @@
 <% include header.ejs %>
 <h1><%= title %></h1>
+<p> </p>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> 등록된 기기 목록</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>기기 고유명</th>
+                    <th>IP 주소</th>
+                    <th>기기 종류</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>기기 고유명</th>
+                    <th>IP 주소</th>
+                    <th>기기 종류</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">&nbsp;</div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> 최근 불쾌지수</div>
+    <div class="card-body">
+        <div id="CO2_chart"></div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <td> 불쾌 지수</td>
+                    <td> 사람에 대한 영향</td>
+                </tr>
+                <tr>
+                    <td> - 21</td>
+                    <td> 불쾌하지 않음</td>
+                </tr>
+                <tr>
+                    <td> 21 - 24</td>
+                    <td> 50% 미만의 사람들이 불쾌감을 느낌</td>
+                </tr>
+                <tr>
+                    <td> 24 - 27</td>
+                    <td> 50%의 사람들이 불쾌감을 느낌</td>
+                </tr>
+                <tr>
+                    <td> 27 - 29</td>
+                    <td> 대부분의 사람들이 불쾌감을 느낌</td>
+                </tr>
+                <tr>
+                    <td> 29 - 32</td>
+                    <td> 모든 사람들이 심각한 스트레스를 받음</td>
+                </tr>
+                <tr>
+                    <td> 32 - </td>
+                    <td> 의학적 응급 상황</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">Powered by Google Chart</div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> 최근 CO2 농도</div>
+    <div class="card-body">
+        <div id="CO2_chart"></div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <td> CO2 농도 (ppm)</td>
+                <td> 사람에 대한 영향</td>
+            </tr>
+            <tr>
+                <td> 350 - 450</td>
+                <td> 평균 실외 수치</td>
+            </tr>
+            <tr>
+                <td> 600 - 1,200</td>
+                <td> 평균 실내 수치</td>
+            </tr>
+            <tr>
+                <td> 1,000 &lt;</td>
+                <td> 피로감, 집중력 저하</td>
+            </tr>
+            <tr bgcolor="#ffc0cb">
+                <td> 5,000 &lt;</td>
+                <td> 견딜 수 있는 최대 수치</td>
+            </tr>
+            <tr bgcolor="#cd5c5c" style="color: white">
+                <td> 38,000 &lt;</td>
+                <td> 직접 호흡 불가</td>
+            </tr>
+            <tr bgcolor="#8b0000" style="color: white">
+                <td> 100,000 &lt;</td>
+                <td> 착란, 구토, 의식손실 또는 사망</td>
+            </tr>
+        </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">Powered by Google Chart</div>
+</div>
 <% include footer.ejs %>

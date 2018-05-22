@@ -45,21 +45,31 @@ exports.signout = function(req, res){
 }
 
 exports.renderSignin = function(req, res, next) {
-    if(!req.user) {
-        res.render('signin', {
-            messages : req.flash('error') || req.flash('info')
-        });
-    }else {
-        return res.redirect('/');
-    }
+    Auth.find(function(err, accounts) {
+        if(err) return next(err);
+        if(!Object.keys(accounts).length) return res.redirect('/signup');
+
+        if(!req.user) {
+            res.render('auth/signin', {
+                messages : req.flash('error') || req.flash('info')
+            });
+        }else {
+            return res.redirect('/');
+        }
+    });
 };
 
 exports.renderSignup = function(req,res,next) {
-    if (!req.user) {
-        res.render('signup', {
-            messages : req.flash('error')
-        });
-    } else {
-        return res.redirect('/');
-    }
+    Auth.find(function(err, accounts){
+        if(err) return next(err);
+        if(Object.keys(accounts).length) return res.redirect('/signin');
+
+        if (!req.user) {
+            res.render('auth/signup', {
+                messages : req.flash('error')
+            });
+        } else {
+            return res.redirect('/');
+        }
+    });
 };

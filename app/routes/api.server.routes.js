@@ -19,6 +19,10 @@ module.exports = function(app) {
         .post(valueController.addTemperature)
         .get(valueController.getTemperature);
 
+    app.route('/api/value/2')
+        .post(valueController.addDanger)
+        .get(valueController.getDanger);
+
     /**
     app.route('/api/value/2')
         .post(valueController.addFireInfo);

@@ -7,7 +7,7 @@ module.exports = function() {
 
     db.on('error', console.error);
     db.once('open', function(){
-        console.log("Successfully connected to MongoDB");
+        console.log("mongoose: Successfully connected to MongoDB");
     });
 
     mongoose.connect("mongodb://"+config.mongoDB.host+":" + config.mongoDB.port + "/" +config.mongoDB.database, {keepAlive: 1});
@@ -16,6 +16,7 @@ module.exports = function() {
     require('../app/models/Device.Schema');
     require('../app/models/Temperature.Schema');
     require('../app/models/Auth.Schema');
+    require('../app/models/TimeLog.Schema');
 
     return db;
 }
